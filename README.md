@@ -33,7 +33,7 @@ A classic 3D Breakout / Bounce game built with [Three.js](https://threejs.org/).
 
 ## Tech Stack
 
-- **Three.js** (v0.160) — loaded from CDN, no install required
+- **Three.js** (v0.160) — bundled locally in `lib/`, no CDN or install required
 - Pure HTML + JavaScript — single self-contained file
 
 ## Deployment
