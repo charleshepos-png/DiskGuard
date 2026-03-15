@@ -2,9 +2,13 @@
 
 A classic 3D Breakout / Bounce game built with [Three.js](https://threejs.org/). Destroy all the bricks by bouncing the ball off your paddle!
 
+## 🎮 Play Now
+
+**[▶ Play 3D Bounce](https://charleshepos-png.github.io/DiskGuard/)**
+
 ## How to Play
 
-1. Open `index.html` in a modern web browser (Chrome, Firefox, Edge, Safari).
+1. Open the link above — or open `index.html` locally with a web server.
 2. Click **Play** to start the game.
 3. Move your **mouse** (or finger on mobile) to control the paddle.
 4. **Click** (or tap) to launch the ball.
@@ -31,3 +35,21 @@ A classic 3D Breakout / Bounce game built with [Three.js](https://threejs.org/).
 
 - **Three.js** (v0.160) — loaded from CDN, no install required
 - Pure HTML + JavaScript — single self-contained file
+
+## Deployment
+
+This game is automatically deployed to **GitHub Pages** on every push to `main`.
+
+To enable GitHub Pages for the first time:
+1. Go to your repository **Settings** → **Pages**
+2. Under **Build and deployment**, set Source to **GitHub Actions**
+3. The included workflow (`.github/workflows/deploy.yml`) handles the rest
+
+To run locally:
+```bash
+# Any simple HTTP server works — ES modules require a server
+npx serve .
+# or
+python3 -m http.server 8080
+```
+Then open `http://localhost:8080` in your browser.
