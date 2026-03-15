@@ -117,6 +117,8 @@
     const INITIAL_BALL_SPEED = 0.12;
     const MAX_BALL_SPEED = 0.25;
     const SPEED_INCREMENT = 0.003;
+    const WALL_THICKNESS = 0.3;
+    const WALL_INSET = WALL_THICKNESS / 2;
 
     // ==========================================
     // Game State
@@ -244,11 +246,11 @@
     }
 
     // Left wall
-    createWall(0.3, WALL_HEIGHT, ARENA_DEPTH, -ARENA_WIDTH / 2, WALL_HEIGHT / 2, -ARENA_DEPTH / 2);
+    createWall(WALL_THICKNESS, WALL_HEIGHT, ARENA_DEPTH, -ARENA_WIDTH / 2, WALL_HEIGHT / 2, -ARENA_DEPTH / 2);
     // Right wall
-    createWall(0.3, WALL_HEIGHT, ARENA_DEPTH, ARENA_WIDTH / 2, WALL_HEIGHT / 2, -ARENA_DEPTH / 2);
+    createWall(WALL_THICKNESS, WALL_HEIGHT, ARENA_DEPTH, ARENA_WIDTH / 2, WALL_HEIGHT / 2, -ARENA_DEPTH / 2);
     // Back wall
-    createWall(ARENA_WIDTH, WALL_HEIGHT, 0.3, 0, WALL_HEIGHT / 2, -ARENA_DEPTH);
+    createWall(ARENA_WIDTH, WALL_HEIGHT, WALL_THICKNESS, 0, WALL_HEIGHT / 2, -ARENA_DEPTH);
 
     // Glowing edge lines
     const edgeMat = new THREE.LineBasicMaterial({ color: 0x00b4ff, transparent: true, opacity: 0.4 });
@@ -336,7 +338,7 @@
           brick.castShadow = true;
           brick.receiveShadow = true;
           brick.userData.row = row;
-          brick.userData.health = row < 2 ? 2 : 1; // top 2 rows take 2 hits
+          brick.userData.health = row < 2 ? 2 : 1; // first 2 rows (back of arena) take 2 hits
           scene.add(brick);
           bricks.push(brick);
         }
@@ -512,7 +514,7 @@
       requestAnimationFrame(animate);
 
       // Paddle movement
-      const targetX = mouseX * (ARENA_WIDTH / 2 - PADDLE_WIDTH / 2 - 0.3);
+      const targetX = mouseX * (ARENA_WIDTH / 2 - PADDLE_WIDTH / 2 - WALL_INSET);
       paddle.position.x += (targetX - paddle.position.x) * 0.15;
 
       if (gameRunning) {
@@ -526,7 +528,7 @@
           ball.position.y = BALL_RADIUS + 0.05; // keep ball on floor level
 
           // Wall collisions
-          const halfW = ARENA_WIDTH / 2 - 0.15 - BALL_RADIUS;
+          const halfW = ARENA_WIDTH / 2 - WALL_INSET - BALL_RADIUS;
           if (ball.position.x < -halfW) {
             ball.position.x = -halfW;
             ballDir.x = Math.abs(ballDir.x);
@@ -536,8 +538,8 @@
             ballDir.x = -Math.abs(ballDir.x);
           }
           // Back wall
-          if (ball.position.z < -ARENA_DEPTH + 0.15 + BALL_RADIUS) {
-            ball.position.z = -ARENA_DEPTH + 0.15 + BALL_RADIUS;
+          if (ball.position.z < -ARENA_DEPTH + WALL_INSET + BALL_RADIUS) {
+            ball.position.z = -ARENA_DEPTH + WALL_INSET + BALL_RADIUS;
             ballDir.z = Math.abs(ballDir.z);
           }
 
